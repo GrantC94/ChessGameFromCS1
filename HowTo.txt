@@ -1,0 +1,110 @@
+Chess Game Tutorial by Grant Coles
+=========================================================
+
+This will create a text-based chess game. It will wait for a piece
+selection, reprint the board with the possible moves marked on the board, 
+and waits for a move to be made. After a move is made, it reprints the board
+with a reminder of who's turn it is. 
+
+1. The easiest way to start is with a simple "Hello World" class
+titled ChessGame. This is where the main class will be found, as
+well as all the steps required in actual gameplay.
+
+2. In order to print and manuvere pieces on the board, a "Piece" 
+object is required. However, in order to differentiate between
+pieces of a different type (i.e. Pawns, Rooks, Kings), the 
+"Piece" class should be made abstract. the constructor of the
+"Piece" class should contain a boolean, which will be used to 
+differentiate between players.
+
+3. In the "Piece" class, add abstractmethods that return an array list of
+integers that represent coordinates of possible moves (select method),
+swap coordinates of the pieces current location and the location that 
+is selected to move to(move method), return the boolean that represents the 
+player(getPlayer method), makes sure that possible moves that are found by 
+the select method are valid and within the boundry of the board(checkMove method),
+and a method that returns a String of one letter that represents the piece,
+in my case a capital letter for one player and lowercase for the other(toString method).
+
+4. Next, create subclasses of "Piece" titled "Pawn", "Rook", "Knight", 
+"Bishop", "Queen", "King", "Blank", and "PossibleMove". While it is clear
+what most of these pieces will become, it is likely unclear what the 
+"Blank" and "PossibleMoves" would be. These two pieces are used to represent
+empty locations and possible locations a piece could move when the board, which
+is a 2D array of pieces, is printed
+
+5. In each of the classes, fill in their versions of the abstract methods from
+the "Piece" class.
+
+6. Next, make another simple "Hello World" class titled CheckCheck. This class
+will be returned to later, and be used to test whether a piece is in check or
+checkmate.
+
+7. Now begins the real work. First, three global 8x8 Arrays of pieces need to be created,
+representing the game board, a board used to test for check and checkmate, and a board that
+will be used to replace the possible moves pieces on the board after a move is made. Also, 
+a constant boolean to represent turn is needed, as well as a constant "board size" of 8. Next, 
+add the following classes:
+
+	A.      "createNewBoard", which will place all the pieces back to the original 
+		classic locations to begin a new game
+
+	B.	"printBoard", which will loop through the array and print out the 
+		board that is passed through as a parameter
+	
+	C.	"select", which will take in two strings as a paramter, and be discussed
+		more in depth later
+
+	D.	"move", which will take in an ArrayList of integers that represent two
+		coordinates on the board and a Piece. This class will move the piece at 
+		the first coordinate to the second coordinate, and replace the first
+		 coordinate with a blank
+
+	E.	"unmove", which will take in the same two parameters as move, and reverse
+		the move.
+
+	F.	"turnChanger", which will change the boolean the who's turn it is. 
+
+	G.	"locationConverter", which will convert the input of a standard location
+		on a chessboard (like "a 7" or "d 4") into array indexes.
+
+	H.	"printHelp", which will print out a help screen, containing information
+		about how to input commands, and how to coordinate system of a chessboard
+		works. Another possible helpful piece of information would be to 
+		print out an example board with the coordinate system.
+	
+	I.	"replaceXs", which will take in the temporary board and the current game board,
+		and will replace all of the "X"'s that represent possible moves on the game board
+		with the what was there before the "X".
+
+8. Now begins work on the "select" method. It should first send those two strings to the locationConverter
+and find the piece at that location. Next, it will run the Piece's select method and find every location on
+the board that is returned by that method. It will copy a current version of the board to the temporary board, 
+and will replace those locations with "possibleMove" pieces. Next it should wait for input, allowing quit, move,
+reselect, new game, cancel, and help commands. If move is selected, it should send the move coordinates to the locationConverter,
+move the piece, test to see if this would cause the player's king to go into or remain in check. If it would be in check,
+it should warn the player and move the piece back. If not, it should leave the piece there and change turns to the other player
+
+9. Turning attention to the CheckCheck class. It should have the following methods:
+
+	A.	"checkCheck", which will locate the king of a given player, and make each possible
+		move that the opposing player could make. It should return a boolean representing
+		whether or not the king can be captured, or is "in check".
+
+	B.	"checkmateCheck", which will gather all the pieces of the player in check and
+		send them to the test class.
+
+	C.	"test", which makes all possible moves of the player to see if it is possible 
+		to get their king out of check
+
+	D.	"checkmateCheckCheck", which is used by test to see if the player is still in check
+
+10. All that is left is the main method. The main method needs be in a repeating loop, take in a string as input, and direct
+it to the correct command. First, it should print whose turn it is. Next, it should print whether the current player
+is in check. If so, it should check for checkmate. If checkmate is found, it should announce the winner and ask the user
+if they want to play again. If not, but the player is in check, it should notify the user. Else, everything should continue as normal.
+Next, it should do the input directing. Acceptable commands should be new game, quit, help, and select. If select is selected, it should be
+accompanied by a letter and a number representing coordinates on the board, and all of this needs to be sent to the select method.
+
+11. Finally, make sure that the program is user friendly. Make sure that if an invalid input is recieved, the game does not
+crash, and make sure that the help screen prints any information needed to understand the game. Finally, Compile and have fun!
